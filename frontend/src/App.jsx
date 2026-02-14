@@ -1,22 +1,27 @@
-function App() {
+import React, { useState } from "react";
+import Loader from "./components/Loader";
+import { BeamsBackground } from "./components/ui/beams-background";
+import { HomePage } from "./pages/HomePage";
+
+const App = () => {
+  const [loading, setLoading] = useState(true);
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-[var(--color-background)]">
+    <div className="relative min-h-screen w-full">
 
-      <h1 className="text-5xl md:text-6xl font-bold text-[var(--color-primary)]">
-        GDG GESCOE
-      </h1>
+      {/* Background */}
+      <BeamsBackground className="fixed inset-0 -z-10" />
+      {/* Main Content */}
+      <div className={`relative z-10 transition-opacity duration-700 ${loading ? 'opacity-0' : 'opacity-100'}`}>
+        <HomePage />
+      </div>
 
-      <p className="mt-4 text-lg md:text-xl text-[var(--color-foreground)] max-w-xl">
-        Google Developer Group at GESCOE — A community of passionate developers
-        learning, building, and growing together.
-      </p>
-
-      <button className="mt-8 px-6 py-3 rounded-lg bg-[var(--color-primary)] text-white font-medium hover:opacity-90 transition">
-        Join Community
-      </button>
-
+      {/* Loader */}
+      {loading && (
+        <Loader onComplete={() => setLoading(false)} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
